@@ -1,2 +1,8 @@
-package com.leedsbeckett.studentportal.Repository;public interface StudentRepository {
+package com.leedsbeckett.studentportal.Repository;
+
+import com.leedsbeckett.studentportal.Entity.Student;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StudentRepository extends JpaRepository<Student, Long> {
+    Student findByEmail(String email);
 }

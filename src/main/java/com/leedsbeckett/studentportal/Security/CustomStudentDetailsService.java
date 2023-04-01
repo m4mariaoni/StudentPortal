@@ -1,4 +1,4 @@
-package com.leedsbeckett.studentportal.Service;
+package com.leedsbeckett.studentportal.Security;
 
 import com.leedsbeckett.studentportal.Entity.Student;
 import com.leedsbeckett.studentportal.Repository.StudentRepository;

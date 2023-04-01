@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Manage Courses</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -31,21 +31,25 @@
     </div>
 </nav>
 <br /><br />
+
 <div class="container">
-    <div class="row">
-        <h1> Hello, </h1>
+    <div class="row" style="background: darkolivegreen" >
+        <p>You have enrolled in this course. Please log into the Payment Portal to pay the invoice reference </p>
     </div>
-    <div class="row">
-        <p>Welcome to your portal</p>
-        <br/>
-        <p>Here, you can find information about courses and enroll in any of the courses we offer.
-            <br/>
-            Once you have registered as a student, which happens automatically upon enrolling in your first course you will be able to access and edit your student profile.
-            <br/>
-            You will also be able to see the courses you are enrolled in.
-            <br/>
-            User the navigation bar above to access the different features of your portal </p>
-    </div>
+    <form th:action="@{/enroll/{id}(id=${course.id})}" method="post" th:object="${courses}" role="form" >
+
+        <div class="row">
+            <h1>[[${course.name}]]</h1>
+        </div>
+        <div class="row">
+            <p>[[${course.description}]]</p>
+        </div>
+        <div class="row">
+            <p>Fee: &nbsp;&nbsp;$[[${course.fee}]]</p>
+        </div>
+    </form>
 </div>
 </body>
 </html>
+
+
