@@ -8,6 +8,8 @@ import com.leedsbeckett.studentportal.Service.IntegrationService;
 import com.leedsbeckett.studentportal.Service.StudentService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -91,10 +93,34 @@ public class AuthenticationController {
         return "students";
     }
 
-    @GetMapping("/students/edit/{id}")
-    public String getEditStudent(@PathVariable Long id, Model model, RedirectAttributes ra) {;
-        model.addAttribute("student", studentService.getStudentById(id));
-        return "student";
+    @GetMapping("/profile")
+    public String getprofile(Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var name = auth.getName();
+        var students = studentService.findStudentByEmail(name);
+        model.addAttribute("studentprofile",students);
+        return "profile";
+
+    }
+
+    @PostMapping("/profileupdate/{id}")
+    public String updateProfile(Model model,@PathVariable Long id, @ModelAttribute("student") StudentModel studentModel){
+        Student currentStudent = studentService.getStudentById(id);
+        ModelMapper modelMapper = new ModelMapper();
+        currentStudent.setFirstName(studentModel.getFirstName());
+        currentStudent.setLastName(studentModel.getLastName());
+
+        modelMapper.map(currentStudent, studentModel);
+        studentService.updateStudent(studentModel);
+        var successMsg = "Profile updated";
+        model.addAttribute("successMsg",successMsg);
+        return "redirect:/index";
+
+    }
+
+    @GetMapping("/profilesuccess")
+    public String getEditStudent(Model model,@PathVariable Long id, @ModelAttribute("student") StudentModel studentModel) {;
+        return "profileupdate";
     }
     @PostMapping("/updateStudent/{id}")
     public String updateStudent(@PathVariable Long id, @ModelAttribute("student") StudentModel studentModel,

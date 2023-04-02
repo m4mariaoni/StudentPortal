@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Manage Courses</title>
+  <title>Home</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
   <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
   <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -24,6 +24,16 @@
           <a class="nav-link active" aria-current="page" th:href="@{/courses}">All Courses</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/courses}">My Enrollments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/profile}">Student Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/courses}">Graduation</a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
         </li>
       </ul>
@@ -32,23 +42,18 @@
 </nav>
 <br /><br />
 <div class="container">
-  <form th:action="@{/enroll/{id}(id=${course.id})}" method="post" th:object="${courses}" role="form" >
+  <div class="row">
+    <h1> Graduation, </h1>
+  </div>
+  <div class="row">
 
-      <div class="row">
-      <h1>[[${course.name}]]</h1>
-    </div>
-    <div class="row">
-      <p>[[${course.description}]]</p>
-    </div>
-    <div class="row">
-      <p>Fee: &nbsp;&nbsp;$[[${course.fee}]]</p>
-    </div>
-    <div class="row">
-      <button type="submit" class="btn-primary btn-sm m-2">Enroll</button>
-      <a class="mt-2" style="text-decoration: underline" th:href="@{/courses}"> Back</a>
-    </div>
-  </form>
+    <p>
+      You need to pay any outstanding course and library fees before you are eligible to graduate.
+      <br/>
+      your current status is <span th:text="${status}" ></span> to graduate
+      <br/>
+      </p>
+  </div>
 </div>
 </body>
 </html>
-

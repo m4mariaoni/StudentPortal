@@ -1,5 +1,6 @@
 package com.leedsbeckett.studentportal.Controller;
 
+import com.leedsbeckett.studentportal.Entity.Course;
 import com.leedsbeckett.studentportal.Exceptions.CourseNotFoundException;
 import com.leedsbeckett.studentportal.Models.*;
 import com.leedsbeckett.studentportal.Service.CourseService;
@@ -70,9 +71,9 @@ public class CourseController {
             invoiceModel.setType(0);
             invoiceModel.setDueDate(LocalDate.now().plusDays(5));
             var result = integrationService.createCourseFeeInvoice(invoiceModel);
-            var referenceMsg = result.getReference();
+            var referenceNo = result.getReference();
             model.addAttribute("course", course);
-            model.addAttribute("pgName",referenceMsg);
+            model.addAttribute("refNo",referenceNo);
             return "enrolledcourse";
         } catch (CourseNotFoundException e) {
             ra.addFlashAttribute("message", "Check this out");
@@ -80,4 +81,24 @@ public class CourseController {
         }
     }
 
+    @GetMapping("/graduation")
+    public String graduationInfo(Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var name = auth.getName();
+        var user = studentService.findStudentByEmail(name);
+        var status = "use api";
+        model.addAttribute("status", status);
+        return "graduation";
+    }
+
+    @GetMapping("/enrollmentlist")
+    public String getEnrollCourses(Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var name = auth.getName();
+        var user = studentService.findStudentByEmail(name);
+        Course cc = new Course();
+        var listcourse= cc.getEnrolledStudents();
+        model.addAttribute("listcourse", listcourse);
+        return  "listcourseenrolled";
+    }
 }

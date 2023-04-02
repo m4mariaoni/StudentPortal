@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Manage Courses</title>
+  <title>Profile</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
   <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
   <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
@@ -32,22 +32,21 @@
 </nav>
 <br /><br />
 <div class="container">
-  <form th:action="@{/enroll/{id}(id=${course.id})}" method="post" th:object="${courses}" role="form" >
+  <p>Welcome</p>
+  <form th:action="@{/profileupdate/{id}(id=${studentprofile.id})}"  method="post">
+    <p>
+      FirstName: <input type="text" th:field="*{studentprofile.firstName}">
+    </p>
+    <p>
+     Surname: <input type="text" th:field="*{studentprofile.lastName}">
+    </p>
+    <div>StudentID: &nbsp; <p th:text="*{studentprofile.studentId}"></p></div>
 
-      <div class="row">
-      <h1>[[${course.name}]]</h1>
-    </div>
-    <div class="row">
-      <p>[[${course.description}]]</p>
-    </div>
-    <div class="row">
-      <p>Fee: &nbsp;&nbsp;$[[${course.fee}]]</p>
-    </div>
-    <div class="row">
-      <button type="submit" class="btn-primary btn-sm m-2">Enroll</button>
-      <a class="mt-2" style="text-decoration: underline" th:href="@{/courses}"> Back</a>
-    </div>
+    <p>
+      <input type="submit" value="Edit Details"/> <input type="reset" value="Reset">
+    </p>
   </form>
+
 </div>
 </body>
 </html>

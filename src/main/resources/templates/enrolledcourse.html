@@ -24,6 +24,15 @@
                     <a class="nav-link active" aria-current="page" th:href="@{/courses}">All Courses</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/courses}">My Enrollments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/profile}">Student Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/courses}">Graduation</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
@@ -35,10 +44,10 @@
 <div class="container">
     <div class="row" style="background-color: aquamarine" >
 
-        <p>You have enrolled in this course. Please log into the Payment Portal to pay the invoice reference </p>
-        <h2 th:text="${pgName}" ></h2>
+        <p>You have enrolled in this course. Please log into the Payment Portal to pay the invoice reference &nbsp;&nbsp;</p>
+        <p th:text="${refNo}" ></p>
     </div>
-    <form th:action="@{/enroll/{id}(id=${course.id})}" method="post" th:object="${courses}" role="form" >
+    <form th:action="@{/enroll/{id}(id=${course.id})}" method="post" th:object="${courses}" role="form">
 
         <div class="row">
             <h1>[[${course.name}]]</h1>

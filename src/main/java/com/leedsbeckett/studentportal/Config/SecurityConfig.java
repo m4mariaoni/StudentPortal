@@ -39,7 +39,8 @@ public class SecurityConfig {
                         authorize.requestMatchers(PUBLIC_MATCHERS).permitAll()
                                 .requestMatchers("/","/index","/students", "/students/edit/{id}",
                                         "/courses","/courses/details/{id}", "/updateStudent/{id}",
-                                        "/enroll/{id}").permitAll()
+                                        "/enroll/{id}","/profile","/profileupdate/{id}",
+                                        "/profile/edit/{id}","/graduation", "/enrollmentlist").permitAll()
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
