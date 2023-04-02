@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:spring="http://www.w3.org/1999/XSL/Transform">
 <head>
     <meta charset="UTF-8">
     <title>Manage Courses</title>
@@ -33,8 +33,10 @@
 <br /><br />
 
 <div class="container">
-    <div class="row" style="background: darkolivegreen" >
+    <div class="row" style="background-color: aquamarine" >
+
         <p>You have enrolled in this course. Please log into the Payment Portal to pay the invoice reference </p>
+        <h2 th:text="${pgName}" ></h2>
     </div>
     <form th:action="@{/enroll/{id}(id=${course.id})}" method="post" th:object="${courses}" role="form" >
 

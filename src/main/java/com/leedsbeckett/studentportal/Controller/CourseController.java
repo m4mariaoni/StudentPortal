@@ -1,9 +1,7 @@
 package com.leedsbeckett.studentportal.Controller;
 
 import com.leedsbeckett.studentportal.Exceptions.CourseNotFoundException;
-import com.leedsbeckett.studentportal.Models.AccountModel;
-import com.leedsbeckett.studentportal.Models.CourseModel;
-import com.leedsbeckett.studentportal.Models.InvoiceModel;
+import com.leedsbeckett.studentportal.Models.*;
 import com.leedsbeckett.studentportal.Service.CourseService;
 import com.leedsbeckett.studentportal.Service.IntegrationService;
 import com.leedsbeckett.studentportal.Service.StudentService;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -55,18 +54,25 @@ public class CourseController {
             AccountModel accountModel = new AccountModel();
 
             var course = courseService.getCoursebyId(ids);
-            model.addAttribute("course", course);
+
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             var name = auth.getName();
             var user = studentService.findStudentByEmail(name);
-            courseService.enrollStudentToCourse(user.id,ids);
 
+
+           courseService.enrollStudentToCourse(user.id,ids);
 
             accountModel.studentId = user.getStudentId();
-            invoiceModel.setAccount(accountModel);
-
-            integrationService.createCourseFeeInvoice(invoiceModel);
+            //invoiceModel.setAccount(accountModel);
+            invoiceModel.setStudentId(user.getStudentId());
+            invoiceModel.setAmount(course.getFee());
+            invoiceModel.setType(0);
+            invoiceModel.setDueDate(LocalDate.now().plusDays(5));
+            var result = integrationService.createCourseFeeInvoice(invoiceModel);
+            var referenceMsg = result.getReference();
+            model.addAttribute("course", course);
+            model.addAttribute("pgName",referenceMsg);
             return "enrolledcourse";
         } catch (CourseNotFoundException e) {
             ra.addFlashAttribute("message", "Check this out");

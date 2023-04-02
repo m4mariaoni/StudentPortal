@@ -3,21 +3,8 @@ package com.leedsbeckett.studentportal.Models;
 import java.time.LocalDate;
 
 public class InvoiceModel {
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
+    private Double amount;
 
     public Double getAmount() {
         return amount;
@@ -35,38 +22,35 @@ public class InvoiceModel {
         this.dueDate = dueDate;
     }
 
-    public Type getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(int type) {
         this.type = type;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public AccountModel getAccount() {
-        return account;
+        return accounts;
     }
 
-    public void setAccount(AccountModel account) {
-        this.account = account;
+    public void setAccount(AccountModel accounts) {
+        this.accounts = accounts;
     }
 
-    private Long id;
-    private String reference;
-    private Double amount;
     private LocalDate dueDate;
-    private Type type;
-    private Status status;
-    private AccountModel account;
+    private int type;
+    private AccountModel accounts;
 
+    public String getStudentId() {
+        return StudentId;
+    }
+
+    public void setStudentId(String studentId) {
+        StudentId = studentId;
+    }
+
+    private String StudentId;
 
     public enum Type{
         LIBRARY_FINE,
@@ -78,5 +62,4 @@ public class InvoiceModel {
         PAID,
         CANCELLED
     }
-
- }
+}

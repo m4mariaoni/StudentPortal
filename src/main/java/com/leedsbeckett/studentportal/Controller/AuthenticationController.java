@@ -77,10 +77,6 @@ public class AuthenticationController {
             return "/register";
         }
 
-        AccountModel accountModel = new AccountModel();
-        accountModel.studentId = studentModel.studentId;
-        integrationService.createFinanceAccount(accountModel);
-
         studentService.saveStudent(studentModel);
 
 

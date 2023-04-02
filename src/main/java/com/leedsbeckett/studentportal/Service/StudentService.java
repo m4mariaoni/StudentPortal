@@ -45,7 +45,7 @@ public class StudentService implements IStudentService {
         accountModel.studentId = student.getStudentId();
         integrationService.createFinanceAccount(accountModel);
 
-        integrationService.createLibraryAccount(student);
+        integrationService.createLibraryAccount(studentmodel);
 
     }
 
