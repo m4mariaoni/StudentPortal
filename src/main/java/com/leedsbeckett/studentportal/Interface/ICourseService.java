@@ -13,6 +13,6 @@ public interface ICourseService {
 
     CourseModel getbyId(Long id) throws CourseNotFoundException;
     Course getCoursebyId(Long id) throws CourseNotFoundException;
-    Course enrollStudentToCourse(long studentId, long courseId);
+    //Course enrollStudentToCourse(long studentId, long courseId);
 
 }

@@ -24,14 +24,15 @@
                     <a class="nav-link active" aria-current="page" th:href="@{/courses}">All Courses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/courses}">My Enrollments</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/enrollmentlist}">My Enrollments</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/profile}">Student Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/courses}">Graduation</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/graduation}">Graduation</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
                 </li>
@@ -42,7 +43,13 @@
 <br /><br />
 
 <div class="container">
-    <div class="row" style="background-color: aquamarine" >
+    <div th:if="${param.success}">
+        <div class="alert alert-info">
+            <p>You have enrolled in this course. Please log into the Payment Portal to pay the invoice reference &nbsp;&nbsp;</p>
+            <p th:text="${refNo}" ></p>
+        </div>
+    </div>
+    <div class="row" style="background-color: #e6ebe9;padding-top: 13px;padding-left: 20px;" >
 
         <p>You have enrolled in this course. Please log into the Payment Portal to pay the invoice reference &nbsp;&nbsp;</p>
         <p th:text="${refNo}" ></p>

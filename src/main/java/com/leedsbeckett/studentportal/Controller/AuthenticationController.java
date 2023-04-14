@@ -35,7 +35,10 @@ public class AuthenticationController {
     }
 
     @GetMapping("/index")
-    public String home(){
+    public String home(Model model){
+        var name = getStudentName();
+        var user = studentService.findStudentByEmail(name);
+        model.addAttribute("name",user.firstName);
         return "index";
     }
 
@@ -44,6 +47,7 @@ public class AuthenticationController {
     public String loginForm(){
         return "login";
     }
+
    @GetMapping("/")
     public String form(){
         return "login";
@@ -80,9 +84,6 @@ public class AuthenticationController {
         }
 
         studentService.saveStudent(studentModel);
-
-
-
         return "redirect:/register?success";
     }
 
@@ -95,8 +96,9 @@ public class AuthenticationController {
 
     @GetMapping("/profile")
     public String getprofile(Model model){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        var name = auth.getName();
+        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var name = getStudentName(); //auth.getName();
+
         var students = studentService.findStudentByEmail(name);
         model.addAttribute("studentprofile",students);
         return "profile";
@@ -114,34 +116,29 @@ public class AuthenticationController {
         studentService.updateStudent(studentModel);
         var successMsg = "Profile updated";
         model.addAttribute("successMsg",successMsg);
-        return "redirect:/index";
+        return "redirect:/profile?success";
 
-    }
-
-    @GetMapping("/profilesuccess")
-    public String getEditStudent(Model model,@PathVariable Long id, @ModelAttribute("student") StudentModel studentModel) {;
-        return "profileupdate";
-    }
-    @PostMapping("/updateStudent/{id}")
-    public String updateStudent(@PathVariable Long id, @ModelAttribute("student") StudentModel studentModel,
-                               Model model){
-        Student existingStudent = studentService.findStudentByEmail(studentModel.getEmail());
-        ModelMapper modelMapper = new ModelMapper();
-
-        if(existingStudent != null && existingStudent.getEmail() != null && !existingStudent.getEmail().isEmpty()){
-            existingStudent.setFirstName(studentModel.getFirstName());
-            existingStudent.setLastName(studentModel.getLastName());
-
-            modelMapper.map(existingStudent, studentModel);
-            studentService.updateStudent(studentModel);
-        }
-        return "redirect:/updateStudent?success";
     }
 
     @RequestMapping(value = "/myusername", method = RequestMethod.GET)
     @ResponseBody
     public String currentUserName(Principal principal) {
         return principal.getName();
+    }
+
+    public String getStudentName(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var name = auth.getName();
+        return name;
+    }
+
+    @GetMapping("/enrollmentlist")
+    public String getEnrollCourses(Model model){
+        var name = getStudentName();
+        var user = studentService.findStudentByEmail(name);
+        var listcourse = studentService.findCoursesByStudentId(user.getStudentId());
+        model.addAttribute("listcourse", listcourse);
+        return  "listcourseenrolled";
     }
 }
 

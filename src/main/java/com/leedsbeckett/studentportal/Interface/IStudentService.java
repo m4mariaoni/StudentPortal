@@ -14,5 +14,7 @@ public interface IStudentService {
     List<StudentModel> findAllStudents();
 
     Student getStudentById(Long Id);
+    Student enrollStudentToCourse(long studentId, long courseId);
+    List<Course> findCoursesByStudentId(String studentId);
 
 }

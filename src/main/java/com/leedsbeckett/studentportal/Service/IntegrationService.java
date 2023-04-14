@@ -33,5 +33,9 @@ public class IntegrationService {
         return restTemplate.postForObject("http://localhost:5179/api/Invoice/", model, InvoiceViewModel.class);
     }
 
+    public AccountViewModel getOutstandingBalanceDetails(String studentId){
+
+        return restTemplate.getForObject("http://localhost:5179/api/Account/student/{studentId}",AccountViewModel.class,studentId);
+    }
 
 }

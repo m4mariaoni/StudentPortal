@@ -62,13 +62,14 @@ public class CourseService implements ICourseService {
         throw new CourseNotFoundException("Course not found with id " + id);
     }
 
-    public Course enrollStudentToCourse(long studentId, long courseId){
+  /*  public Course enrollStudentToCourse(long studentId, long courseId){
         Course course = courseRepository.findById(courseId).get();
         Student student = studentRepository.findById(studentId).get();
         course.enrolledStudents(student);
         courseRepository.save(course);
         return course;
-    }
+    }*/
+
 
 
 }

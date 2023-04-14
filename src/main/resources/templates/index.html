@@ -24,16 +24,6 @@
                     <a class="nav-link active" aria-current="page" th:href="@{/courses}">All Courses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/enrollmentlist}">My Enrollments</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/profile}">Student Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/graduation}">Graduation</a>
-                </li>
-
-                <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
@@ -42,20 +32,23 @@
 </nav>
 <br /><br />
 <div class="container">
-    <div class="row">
-        <h1> Hello, </h1>
-    </div>
-    <div class="row">
-        <p>Welcome to your portal</p>
-        <br/>
-        <p>Here, you can find information about courses and enroll in any of the courses we offer.
-            <br/>
-            Once you have registered as a student, which happens automatically upon enrolling in your first course you will be able to access and edit your student profile.
-            <br/>
-            You will also be able to see the courses you are enrolled in.
-            <br/>
-            User the navigation bar above to access the different features of your portal </p>
-    </div>
+
+        <h5> Hello,&nbsp; <span style="color:blueviolet" th:text="${name}"></span> </h5>
+
+
+
+
+        <p>Welcome to your portal! </p>
+
+
+        <p>Here, you can find information about courses and enroll in any of the courses we offer.</p>
+
+        <p> Once you have registered as a student, which happens automatically upon enrolling in your first course you will be able to access and edit your student profile.</p>
+
+        <p>You will also be able to see the courses you are enrolled in.</p>
+
+        <p>User the navigation bar above to access the different features of your portal </p>
+
 </div>
 </body>
 </html>

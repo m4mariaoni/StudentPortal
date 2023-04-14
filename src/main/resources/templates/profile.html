@@ -24,6 +24,15 @@
           <a class="nav-link active" aria-current="page" th:href="@{/courses}">All Courses</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/enrollmentlist}">My Enrollments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/profile}">Student Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/graduation}">Graduation</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
         </li>
       </ul>
@@ -32,19 +41,24 @@
 </nav>
 <br /><br />
 <div class="container">
-  <p>Welcome</p>
+  <h4>Edit Student Profile</h4>
+  <br/>
+  <div th:if="${param.success}">
+    <div class="alert alert-info">
+      You have successfully updated your profile!
+    </div>
+  </div>
   <form th:action="@{/profileupdate/{id}(id=${studentprofile.id})}"  method="post">
     <p>
-      FirstName: <input type="text" th:field="*{studentprofile.firstName}">
+      FirstName: <input style="border:1px solid #ebebeb !important;" type="text" th:field="*{studentprofile.firstName}">
     </p>
     <p>
-     Surname: <input type="text" th:field="*{studentprofile.lastName}">
+     Surname:&nbsp;&nbsp; <input style="border:1px solid #ebebeb !important;" type="text" th:field="*{studentprofile.lastName}">
     </p>
-    <div>StudentID: &nbsp; <p th:text="*{studentprofile.studentId}"></p></div>
-
-    <p>
-      <input type="submit" value="Edit Details"/> <input type="reset" value="Reset">
-    </p>
+    <div>StudentID: &nbsp; <span th:text="*{studentprofile.studentId}"></span></div>
+      <p>
+          <input class="btn btn-primary" type="submit" value="Submit" style="margin-top: 15px"/>
+      </p>
   </form>
 
 </div>

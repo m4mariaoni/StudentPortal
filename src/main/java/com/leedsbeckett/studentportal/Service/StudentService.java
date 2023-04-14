@@ -6,9 +6,11 @@ import com.leedsbeckett.studentportal.Interface.IStudentService;
 import com.leedsbeckett.studentportal.Models.AccountModel;
 import com.leedsbeckett.studentportal.Models.CourseModel;
 import com.leedsbeckett.studentportal.Models.StudentModel;
+import com.leedsbeckett.studentportal.Repository.CourseRepository;
 import com.leedsbeckett.studentportal.Repository.StudentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +22,15 @@ import java.util.stream.Collectors;
 @Service
 public class StudentService implements IStudentService {
     private StudentRepository studentRepository;
+    private CourseRepository courseRepository;
     private PasswordEncoder passwordEncoder;
     private IntegrationService integrationService;
 
 
-    public StudentService(StudentRepository studentRepository,
+    public StudentService(StudentRepository studentRepository, CourseRepository courseRepository,
     PasswordEncoder passwordEncoder, IntegrationService integrationService){
         this.studentRepository = studentRepository;
+        this.courseRepository = courseRepository;
         this.passwordEncoder = passwordEncoder;
         this.integrationService = integrationService;
     }
@@ -84,6 +88,17 @@ public class StudentService implements IStudentService {
         studentRepository.save(student);
     }
 
+    public Student enrollStudentToCourse(long studentId, long courseId){
+        Course course = courseRepository.findById(courseId).get();
+        Student student = studentRepository.findById(studentId).get();
+        student.enrolledCourses(course);
+        studentRepository.save(student);
+        return student;
+    }
 
+
+    public List<Course> findCoursesByStudentId(String studentId) {
+       return studentRepository.findAllCoursesByUserId(studentId);
+    }
 
 }

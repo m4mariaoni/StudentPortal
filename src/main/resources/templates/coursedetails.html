@@ -35,7 +35,7 @@
   <form th:action="@{/enroll/{id}(id=${course.id})}" method="post" th:object="${courses}" role="form" >
 
       <div class="row">
-      <h1>[[${course.name}]]</h1>
+      <h3>[[${course.name}]]</h3>
     </div>
     <div class="row">
       <p>[[${course.description}]]</p>
@@ -45,7 +45,6 @@
     </div>
     <div class="row">
       <button type="submit" class="btn-primary btn-sm m-2">Enroll</button>
-      <a class="mt-2" style="text-decoration: underline" th:href="@{/courses}"> Back</a>
     </div>
   </form>
 </div>

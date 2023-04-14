@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,12 +16,24 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public  long id;
 
-    public Set<Course> getCourses() {
-        return courses;
+
+    @ManyToMany
+    @JoinTable(
+            name="student_enrolled",
+            joinColumns = @JoinColumn(name="student_id"),
+            inverseJoinColumns = @JoinColumn(name="course_id")
+    )
+
+    private Set<Course> enrolledCourses = new HashSet<>();
+
+    public void enrolledCourses(Course course) {
+        enrolledCourses.add(course);
     }
-    @JsonIgnore
-    @ManyToMany(mappedBy = "enrolledStudents")
-    private Set<Course> courses = new HashSet<>();
+
+    public Set<Course> getEnrolledCourses() {
+        return enrolledCourses;
+    }
+
 
     @Column(nullable = false)
     public  String studentId;

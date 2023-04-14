@@ -24,13 +24,13 @@
           <a class="nav-link active" aria-current="page" th:href="@{/courses}">All Courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/courses}">My Enrollments</a>
+          <a class="nav-link active" aria-current="page" th:href="@{/enrollmentlist}">My Enrollments</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" th:href="@{/profile}">Student Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/courses}">Graduation</a>
+          <a class="nav-link active" aria-current="page" th:href="@{/graduation}">Graduation</a>
         </li>
 
         <li class="nav-item">
@@ -43,16 +43,22 @@
 <br /><br />
 <div class="container">
   <div class="row">
-    <h1> Graduation, </h1>
+    <h4>  Graduation</h4>
   </div>
-  <div class="row">
+  <div>
+
+    <p>You need to pay any outstanding course and library fees before you are eligible to graduate.</p>
+
+
 
     <p>
-      You need to pay any outstanding course and library fees before you are eligible to graduate.
-      <br/>
-      your current status is <span th:text="${status}" ></span> to graduate
-      <br/>
-      </p>
+      <span th:if="${status.hasOutstandingBalance==true}"> Your current status is NOT eligible to graduate</span>
+      <span th:if="${status.hasOutstandingBalance==false}"> Your current status is eligible to graduate</span>
+    </p>
+
+
+
+    <p>Please log into the Payment portal to pay your outstanding balance.</p>
   </div>
 </div>
 </body>

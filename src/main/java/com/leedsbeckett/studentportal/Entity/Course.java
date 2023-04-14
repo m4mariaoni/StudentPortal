@@ -1,8 +1,10 @@
 package com.leedsbeckett.studentportal.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -61,22 +63,12 @@ public class Course {
         this.fee = fee;
     }
 
-    public Set<Student> getEnrolledStudents() {
-        return enrolledStudents;
+
+    public Set<Student> getEnrolledCourses() {
+        return students;
     }
-
-    @ManyToMany
-    @JoinTable(
-            name="student_enrolled",
-            joinColumns = @JoinColumn(name="course_id"),
-            inverseJoinColumns = @JoinColumn(name="student_id")
-    )
-    private Set<Student> enrolledStudents = new HashSet<>();
-
-
-    public void enrolledStudents(Student student) {
-        enrolledStudents.add(student);
-    }
-
+    @JsonIgnore
+    @ManyToMany(mappedBy = "enrolledCourses")
+    private Set<Student> students = new HashSet<>();
 
 }

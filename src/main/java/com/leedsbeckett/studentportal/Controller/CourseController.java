@@ -1,6 +1,7 @@
 package com.leedsbeckett.studentportal.Controller;
 
 import com.leedsbeckett.studentportal.Entity.Course;
+import com.leedsbeckett.studentportal.Entity.Student;
 import com.leedsbeckett.studentportal.Exceptions.CourseNotFoundException;
 import com.leedsbeckett.studentportal.Models.*;
 import com.leedsbeckett.studentportal.Service.CourseService;
@@ -61,22 +62,24 @@ public class CourseController {
             var name = auth.getName();
             var user = studentService.findStudentByEmail(name);
 
-
-           courseService.enrollStudentToCourse(user.id,ids);
+            //Enroll student to course using the studentId with the courseId
+           studentService.enrollStudentToCourse(user.id, ids);
 
             accountModel.studentId = user.getStudentId();
-            //invoiceModel.setAccount(accountModel);
+
+            //Create an invoice for the tuition fee where 1 represent tuition
             invoiceModel.setStudentId(user.getStudentId());
             invoiceModel.setAmount(course.getFee());
-            invoiceModel.setType(0);
+            invoiceModel.setType(1);
             invoiceModel.setDueDate(LocalDate.now().plusDays(5));
             var result = integrationService.createCourseFeeInvoice(invoiceModel);
             var referenceNo = result.getReference();
             model.addAttribute("course", course);
             model.addAttribute("refNo",referenceNo);
             return "enrolledcourse";
+            //return "redirect:/enrolledcourse?success";
         } catch (CourseNotFoundException e) {
-            ra.addFlashAttribute("message", "Check this out");
+            ra.addFlashAttribute("message", "An error has occured. Please try again");
             return "redirect:/courses";
         }
     }
@@ -86,19 +89,10 @@ public class CourseController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         var name = auth.getName();
         var user = studentService.findStudentByEmail(name);
-        var status = "use api";
+        var status = integrationService.getOutstandingBalanceDetails(user.getStudentId());
         model.addAttribute("status", status);
         return "graduation";
     }
 
-    @GetMapping("/enrollmentlist")
-    public String getEnrollCourses(Model model){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        var name = auth.getName();
-        var user = studentService.findStudentByEmail(name);
-        Course cc = new Course();
-        var listcourse= cc.getEnrolledStudents();
-        model.addAttribute("listcourse", listcourse);
-        return  "listcourseenrolled";
-    }
+
 }
